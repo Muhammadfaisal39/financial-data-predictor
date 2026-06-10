@@ -87,7 +87,7 @@ print(f"On average the model's prediction is ${mae:.2f} away from real price")
 print(f"The model explains {r2*100:.1f}% of the price pattern")
 
 # -----------------------------------------------
-# PART 6 — Draw the results
+# PART 6 — Draw the resultsg
 # -----------------------------------------------
 
 # Create a full prediction line across all days
@@ -111,6 +111,56 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.savefig('apple_prediction.png')
 plt.show()
+
+# -----------------------------------------------
+# PART 7 — Add Random Forest Model for Comparison
+# -----------------------------------------------
+
+from sklearn.ensemble import RandomForestRegressor
+
+# Create Random Forest model
+rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+
+# Train it
+rf_model.fit(X_train, y_train)
+
+# Make predictions
+rf_predictions = rf_model.predict(X_test)
+
+# Check accuracy
+rf_mae = mean_absolute_error(y_test, rf_predictions)
+rf_r2 = r2_score(y_test, rf_predictions)
+
+print("\n=== MODEL COMPARISON ===")
+print(f"Linear Regression  — MAE: ${mae:.2f}  |  R2: {r2:.4f}")
+print(f"Random Forest      — MAE: ${rf_mae:.2f}  |  R2: {rf_r2:.4f}")
+
+# Which model won?
+if rf_r2 > r2:
+    print("\n✅ Random Forest performed better!")
+else:
+    print("\n✅ Linear Regression performed better!")
+
+# Draw comparison graph
+rf_all_predictions = rf_model.predict(X)
+
+plt.figure(figsize=(14, 7))
+plt.plot(apple['date'], apple['close'],
+         color='blue', linewidth=1.5, label='Real Price')
+plt.plot(apple['date'], all_predictions,
+         color='red', linewidth=1.5, linestyle='--', label='Linear Regression')
+plt.plot(apple['date'], rf_all_predictions,
+         color='green', linewidth=1.5, linestyle='--', label='Random Forest')
+plt.title("Apple Stock Price — Model Comparison", fontsize=16)
+plt.xlabel("Date", fontsize=12)
+plt.ylabel("Price in USD ($)", fontsize=12)
+plt.legend(fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig('model_comparison.png')
+plt.show()
+
+print("\n✅ Comparison graph saved as model_comparison.png")
 
 print("\n✅ Graph saved as apple_prediction.png")
 print("\n🎉 Your ML model is complete!")
