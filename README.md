@@ -20,19 +20,23 @@ forecasting presented at an HEC-organized National Conference in 2023.
 
 ## 📊 Results
 
-| Metric | Value |
-|---|---|
-| Model | Linear Regression |
-| Stock | Apple (AAPL) |
-| R2 Score | 0.7664 |
-| Mean Absolute Error | $11.67 |
-| Training Data | 1,007 days |
-| Testing Data | 252 days |
+| Metric | Linear Regression | Random Forest |
+|---|---|---|
+| R2 Score | 0.7664 (76.6%) | 0.9984 (99.8%) |
+| Mean Absolute Error | $11.67 | $0.89 |
+| Training Data | 1,007 days | 1,007 days |
+| Testing Data | 252 days | 252 days |
 
-> The model correctly explains **76.6%** of Apple's 
-> price movement pattern.
+> Random Forest outperformed Linear Regression significantly,
+> achieving **99.84% accuracy** with only **$0.89 average error.**
 
 ---
+
+## 📉 Model Comparison — Real vs Predicted
+
+![Model Comparison](model_comparison.png)
+
+*Blue = Real Price | Red = Linear Regression | Green = Random Forest*
 
 ## 📉 Real Price vs Predicted Price
 
@@ -93,11 +97,11 @@ python predictor.py
 
 ## 🔮 Future Improvements
 
-- Add more ML models (Random Forest, LSTM Neural Network)
+- Add LSTM Neural Network for time-series specific predictions
 - Predict multiple stocks simultaneously
-- Build an interactive dashboard
+- Build an interactive dashboard with real-time data
 - Include sentiment analysis from financial news
-
+- Deploy as a web application
 ---
 
 ## 👨‍💻 About the Author
